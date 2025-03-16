@@ -1,9 +1,9 @@
 import logging
 
-from aiohttp import web, MultipartWriter
+from aiohttp import MultipartWriter, web
 from aiohttp.web_exceptions import HTTPNotFound
 
-from vinx_mjpeg_server.encoder import PreviewImage, Encoder
+from vinx_mjpeg_server.encoder import Encoder, PreviewImage
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ class HttpRequestHandler:
         if req.path == "/":
             return web.Response(text="vinx-mjpeg-server")
         elif req.path.startswith("/encoder/"):
-            encoder_name = req.path[len("/encoder/"):]
+            encoder_name = req.path[len("/encoder/") :]
             encoder = self.get_encoder_by_name(encoder_name)
 
             if encoder is None:
@@ -39,21 +39,16 @@ class HttpRequestHandler:
     async def serve_mjpeg_stream(self, req: web.BaseRequest, preview_image: PreviewImage) -> web.StreamResponse:
         boundary = "frame"
         resp = web.StreamResponse(
-            status=200,
-            headers={
-                "Content-Type": "multipart/x-mixed-replace;boundary={}".format(boundary)
-            }
+            status=200, headers={"Content-Type": f"multipart/x-mixed-replace;boundary={boundary}"}
         )
         await resp.prepare(req)
 
         # Start writing "frames"
         while True:
-            with MultipartWriter('image/jpeg', boundary=boundary) as writer:
+            with MultipartWriter("image/jpeg", boundary=boundary) as writer:
                 # Serve fallback image if preview not available
                 image_data = preview_image.data if preview_image.available else self.fallback_image
-                writer.append(image_data, {
-                    'Content-Type': 'image/jpeg'
-                })
+                writer.append(image_data, {"Content-Type": "image/jpeg"})
 
                 # Send a new boundary every time we capture a new image from the encoder, keep going until the client
                 # closes the connection

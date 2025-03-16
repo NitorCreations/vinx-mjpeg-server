@@ -14,12 +14,15 @@ logger = logging.getLogger("vinx_mjpeg_server")
 
 async def main():
     # Parse arguments
-    parser = argparse.ArgumentParser(prog="vinx-mjpeg-server",
-                                     description="Serves MJPEG streams from VINX HDMI encoder preview images")
-    parser.add_argument("--bootstrap-node", required=True,
-                        help="A VINX encoder to use as bootstrap node for auto-discovery")
-    parser.add_argument("--fallback-image",
-                        help="A JPEG image to use as fallback when the encoder preview is unavailable")
+    parser = argparse.ArgumentParser(
+        prog="vinx-mjpeg-server", description="Serves MJPEG streams from VINX HDMI encoder preview images"
+    )
+    parser.add_argument(
+        "--bootstrap-node", required=True, help="A VINX encoder to use as bootstrap node for auto-discovery"
+    )
+    parser.add_argument(
+        "--fallback-image", help="A JPEG image to use as fallback when the encoder preview is unavailable"
+    )
     args = parser.parse_args()
 
     if not os.access(args.fallback_image, os.R_OK):
@@ -31,7 +34,7 @@ async def main():
         encoders = await discover_encoders(args.bootstrap_node)
         logger.info(f"Discovered {len(encoders)} encoders in total")
     except Exception:
-        logger.exception(f"Failed to query for discovered encoders")
+        logger.exception("Failed to query for discovered encoders")
         return
 
     # Read the fallback image
@@ -39,7 +42,7 @@ async def main():
         fallback_image = f.read()
 
     # Start polling the encoders
-    logger.info(f"Starting background tasks for all encoders")
+    logger.info("Starting background tasks for all encoders")
     tasks = set()
     for encoder in encoders:
         tasks.add(asyncio.create_task(encoder.capture_image_task()))

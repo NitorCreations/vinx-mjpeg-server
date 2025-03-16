@@ -2,6 +2,7 @@ import asyncio
 import logging
 
 import aiohttp
+
 from attr import dataclass
 from pylw3 import LW3, NodeResponse, is_encoder_discovery_node
 
@@ -21,7 +22,7 @@ class Encoder:
     def __init__(self, device_name: str, ip_address: str):
         self.device_name = device_name
         self.ip_address = ip_address
-        self.preview_image = PreviewImage(False, bytes(), asyncio.Event())
+        self.preview_image = PreviewImage(False, b"", asyncio.Event())
 
     async def capture_image_task(self):
         while True:
@@ -33,7 +34,8 @@ class Encoder:
             except Exception as e:
                 self.preview_image.available = False
                 logger.error(
-                    f"An exception occured when getting capture image from {self.device_name} at {self.ip_address}: {e}")
+                    f"An exception occured when getting capture image from {self.device_name} at {self.ip_address}: {e}"
+                )
             finally:
                 self.preview_image.update_event.set()
                 await asyncio.sleep(CAPTURE_INTERVAL.seconds)
