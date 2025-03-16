@@ -23,8 +23,9 @@ async def main():
     parser.add_argument(
         "--fallback-image", help="A JPEG image to use as fallback when the encoder preview is unavailable"
     )
-    parser.add_argument("-l", "--listen-address", default="0.0.0.0",
-                        help="The address the HTTP server should listen on")
+    parser.add_argument(
+        "-l", "--listen-address", default="0.0.0.0", help="The address the HTTP server should listen on"
+    )
     parser.add_argument("-p", "--port", default=6180, type=int, help="The port the HTTP should listen on")
     args = parser.parse_args()
 
