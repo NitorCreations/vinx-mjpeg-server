@@ -10,6 +10,8 @@ dependencies = [
     "aiohttp"
 ]
 
+[tool.setuptools]
+py-modules = ["vinx-mjpeg-server"]
 
 [tool.ruff]
 # https://github.com/astral-sh/ruff#configuration
