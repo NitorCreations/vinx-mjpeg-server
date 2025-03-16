@@ -6,7 +6,7 @@ import os
 from aiohttp import web
 
 from vinx_mjpeg_server.encoder import discover_encoders
-from vinx_mjpeg_server.http import HttpRequestHandler
+from vinx_mjpeg_server.server import HttpRequestHandler
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("vinx_mjpeg_server")
