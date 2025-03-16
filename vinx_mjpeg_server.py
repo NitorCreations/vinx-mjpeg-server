@@ -6,7 +6,7 @@ import os
 from aiohttp import web
 
 from vinx_mjpeg_server.encoder import discover_encoders
-from vinx_mjpeg_server.http import HttpRequestHandler
+from vinx_mjpeg_server.server import HttpRequestHandler
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("vinx_mjpeg_server")
@@ -23,8 +23,9 @@ async def main():
     parser.add_argument(
         "--fallback-image", help="A JPEG image to use as fallback when the encoder preview is unavailable"
     )
-    parser.add_argument("-l", "--listen-address", default="0.0.0.0",
-                        help="The address the HTTP server should listen on")
+    parser.add_argument(
+        "-l", "--listen-address", default="0.0.0.0", help="The address the HTTP server should listen on"
+    )
     parser.add_argument("-p", "--port", default=6180, type=int, help="The port the HTTP should listen on")
     args = parser.parse_args()
 

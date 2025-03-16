@@ -15,6 +15,33 @@ there was an issue in fetching the preview image.
 This application uses our [pylw3](https://github.com/NitorCreations/pylw3) library under the hood to discover encoders 
 and [aiohttp](https://github.com/aio-libs/aiohttp) for HTTP.
 
+## Usage
+
+The recommended way is to run the server using the supplied Dockerfile:
+
+```bash
+$ docker build -t vinx-mjpeg-server:latest .
+$ docker run vinx-mjpeg-server:latest -h
+DEBUG:asyncio:Using selector: EpollSelector
+usage: vinx-mjpeg-server [-h] --bootstrap-node BOOTSTRAP_NODE
+                         [--fallback-image FALLBACK_IMAGE] [-l LISTEN_ADDRESS]
+                         [-p PORT]
+
+Serves MJPEG streams from VINX HDMI encoder preview images
+
+options:
+  -h, --help            show this help message and exit
+  --bootstrap-node BOOTSTRAP_NODE
+                        A VINX encoder to use as bootstrap node for auto-
+                        discovery
+  --fallback-image FALLBACK_IMAGE
+                        A JPEG image to use as fallback when the encoder
+                        preview is unavailable
+  -l, --listen-address LISTEN_ADDRESS
+                        The address the HTTP server should listen on
+  -p, --port PORT       The port the HTTP should listen on
+```
+
 ## License
 
 GNU GENERAL PUBLIC LICENSE version 3
