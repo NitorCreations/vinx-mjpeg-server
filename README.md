@@ -1,5 +1,7 @@
 # vinx-mjpeg-server
 
+[![Linting](https://github.com/NitorCreations/vinx-mjpeg-server/actions/workflows/ruff.yaml/badge.svg)](https://github.com/NitorCreations/vinx-mjpeg-server/actions/workflows/ruff.yaml)
+
 This is an MJPEG server for Lightware VINX HDMI encoders. It provides a basic HTTP server that serves static images and 
 MJPEG streams for each encoder on the network. Encoders are automatically enumerated by contacting a bootstrap node
 (can be any VINX device on the network) and looking at the devices it has discovered.
