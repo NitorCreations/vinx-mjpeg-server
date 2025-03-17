@@ -21,7 +21,9 @@ async def main():
         "--bootstrap-node", required=True, help="A VINX encoder to use as bootstrap node for auto-discovery"
     )
     parser.add_argument(
-        "--fallback-image", help="A JPEG image to use as fallback when the encoder preview is unavailable"
+        "--fallback-image",
+        required=True,
+        help="A JPEG image to use as fallback when the encoder preview is unavailable",
     )
     parser.add_argument(
         "-l", "--listen-address", default="0.0.0.0", help="The address the HTTP server should listen on"
