@@ -47,7 +47,7 @@ In practice, you could use something like this to run the container:
 ```bash
 docker run -d --restart unless-stopped \
   --mount type=bind,src=$(pwd)/nitor-default.jpg,dst=/app/fallback.jpg \
-  -p 10.211.0.186:6180:6180 \
+  -p 10.211.0.185:6180:6180 \
   vinx-mjpeg-server:latest \
     --bootstrap-node 10.211.0.75 \
     --fallback-image /app/fallback.jpg
